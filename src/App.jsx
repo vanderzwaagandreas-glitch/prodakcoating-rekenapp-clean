@@ -74,7 +74,6 @@ export default function App() {
             <USP title="Tot 70% goedkoper" text="Dan volledige dakvervanging" />
             <USP title="Levensduur 30–60 jaar" text="Professioneel 2K siliconensysteem" />
             <USP title="Witte variant" text="Cool Roof Tech · TSR 91% · SRI 115%"  />
-            <USP title="Energieefficiënt " text="PV rendement +7% - +15%"  />
           </div>
         </section>
 
