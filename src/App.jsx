@@ -79,9 +79,9 @@ export default function App() {
         </section>
 
         <section className="mt-6 rounded-3xl bg-slate-900 border border-white/10 p-6 md:p-8 shadow-xl">
-          <h2 className="text-3xl font-black mb-6">
-            1. Kosten & coatingkeuze
-          </h2>
+        <h2 className="text-3xl font-black mb-6">
+  1. Kosten & coatingkeuze
+</h2>
 
           <div className="grid md:grid-cols-2 gap-5">
             <label>
