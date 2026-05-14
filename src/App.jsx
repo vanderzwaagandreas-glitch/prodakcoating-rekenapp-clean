@@ -66,7 +66,7 @@ export default function App() {
           </h1>
 
           <p className="text-slate-300 mt-4 max-w-3xl text-lg">
-            Bereken direct de richtprijs voor uw platte dak en vergelijk CoolShield NextGen 2K met 1-component coating en complete bitumen dakvervanging.
+            Bereken direct de richtprijs voor uw platte dak met CoolShield NextGen 2K.
           </p>
 
           <div className="grid md:grid-cols-3 gap-4 mt-8">
