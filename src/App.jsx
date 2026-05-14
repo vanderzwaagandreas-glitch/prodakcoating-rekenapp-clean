@@ -55,6 +55,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-950 text-white p-4 md:p-10">
       <div className="max-w-6xl mx-auto">
+
         <section className="rounded-3xl bg-gradient-to-br from-slate-900 via-slate-900 to-cyan-950 border border-cyan-400/20 p-6 md:p-10 shadow-2xl">
           <p className="text-cyan-300 text-sm font-black uppercase tracking-[0.25em]">
             ProDakcoating
@@ -68,20 +69,17 @@ export default function App() {
             Bereken direct de richtprijs voor uw platte dak en vergelijk CoolShield NextGen 2K met 1-component coating en complete bitumen dakvervanging.
           </p>
 
-          <div className="grid md:grid-cols-2 xl:grid-cols-6 gap-4 mt-8">
+          <div className="grid md:grid-cols-3 gap-4 mt-8">
             <USP title="Geen sloopwerk" text="Bestaande dakbedekking blijft liggen" />
             <USP title="Tot 70% goedkoper" text="Dan volledige dakvervanging" />
             <USP title="Levensduur 30–60 jaar" text="Professioneel 2K siliconensysteem" />
-            <USP title="Witte variant" text="Cool Roof Tech · TSR 91% · SRI 115%" />
-            <USP title="Energie-efficiënt" text="Meer rendement uit PV-panelen en minder behoefte aan airco" />
-            <USP title="Hydrofoob" text="100% waterdicht en bestand tegen stilstaand water" />
           </div>
         </section>
 
         <section className="mt-6 rounded-3xl bg-slate-900 border border-white/10 p-6 md:p-8 shadow-xl">
-        <h2 className="text-3xl font-black mb-6">
-  1. Kosten & coatingkeuze
-</h2>
+          <h2 className="text-3xl font-black mb-6">
+            1. Kosten & coatingkeuze
+          </h2>
 
           <div className="grid md:grid-cols-2 gap-5">
             <label>
@@ -198,6 +196,7 @@ export default function App() {
             />
           </div>
         </section>
+
       </div>
     </div>
   );
@@ -206,8 +205,8 @@ export default function App() {
 function USP({ title, text }) {
   return (
     <div className="rounded-2xl bg-white/10 border border-white/10 p-5">
-      <p className="text-lg font-black">{title}</p>
-      <p className="text-slate-300 mt-2 text-sm leading-relaxed">{text}</p>
+      <p className="text-xl font-black">{title}</p>
+      <p className="text-slate-300 mt-2">{text}</p>
     </div>
   );
 }
