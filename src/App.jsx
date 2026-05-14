@@ -5,6 +5,13 @@ export default function App() {
   const [vatType, setVatType] = useState("bedrijf");
   const [color, setColor] = useState("wit");
 
+  const euro = (value) =>
+    new Intl.NumberFormat("nl-NL", {
+      style: "currency",
+      currency: "EUR",
+      maximumFractionDigits: 0,
+    }).format(value || 0);
+
   const result = useMemo(() => {
     const m2 = Number(area) || 0;
     const valid = m2 >= 80;
@@ -45,17 +52,9 @@ export default function App() {
     };
   }, [area, vatType]);
 
-  const euro = (v) =>
-    new Intl.NumberFormat("nl-NL", {
-      style: "currency",
-      currency: "EUR",
-      maximumFractionDigits: 0,
-    }).format(v || 0);
-
   return (
     <div className="min-h-screen bg-slate-950 text-white p-4 md:p-10">
       <div className="max-w-6xl mx-auto">
-
         <section className="rounded-3xl bg-gradient-to-br from-slate-900 via-slate-900 to-cyan-950 border border-cyan-400/20 p-6 md:p-10 shadow-2xl">
           <p className="text-cyan-300 text-sm font-black uppercase tracking-[0.25em]">
             ProDakcoating
@@ -66,13 +65,18 @@ export default function App() {
           </h1>
 
           <p className="text-slate-300 mt-4 max-w-3xl text-lg">
-            Bereken direct de richtprijs voor uw platte dak en vergelijk CoolShield NextGen 2K met 1-component coating en complete bitumen dakvervanging.
+            Bereken direct de richtprijs voor uw platte dak en vergelijk
+            CoolShield NextGen 2K met 1-component coating en complete bitumen
+            dakvervanging.
           </p>
 
-          <div className="grid md:grid-cols-3 gap-4 mt-8">
+          <div className="grid md:grid-cols-2 xl:grid-cols-6 gap-4 mt-8">
             <USP title="Geen sloopwerk" text="Bestaande dakbedekking blijft liggen" />
             <USP title="Tot 70% goedkoper" text="Dan volledige dakvervanging" />
             <USP title="Levensduur 30–60 jaar" text="Professioneel 2K siliconensysteem" />
+            <USP title="Witte variant" text="Cool Roof Tech · TSR 91% · SRI 115%" />
+            <USP title="Energie-efficiënt" text="Meer rendement uit PV-panelen en minder behoefte aan airco" />
+            <USP title="Hydrofoob" text="100% waterdicht en bestand tegen stilstaand water" />
           </div>
         </section>
 
@@ -119,10 +123,34 @@ export default function App() {
             </p>
 
             <div className="grid md:grid-cols-4 gap-3">
-              <ColorButton active={color === "wit"} onClick={() => setColor("wit")} name="Wit" sub="Maximale reflectie" dot="#ffffff" />
-              <ColorButton active={color === "7047"} onClick={() => setColor("7047")} name="RAL 7047" sub="Telegrijs 4" dot="#cfd3d6" />
-              <ColorButton active={color === "7040"} onClick={() => setColor("7040")} name="RAL 7040" sub="Venstergrijs" dot="#8c9297" />
-              <ColorButton active={color === "7042"} onClick={() => setColor("7042")} name="RAL 7042" sub="Verkeersgrijs A" dot="#4f5358" />
+              <ColorButton
+                active={color === "wit"}
+                onClick={() => setColor("wit")}
+                name="Wit"
+                sub="Maximale reflectie"
+                dot="#ffffff"
+              />
+              <ColorButton
+                active={color === "7047"}
+                onClick={() => setColor("7047")}
+                name="RAL 7047"
+                sub="Telegrijs 4"
+                dot="#cfd3d6"
+              />
+              <ColorButton
+                active={color === "7040"}
+                onClick={() => setColor("7040")}
+                name="RAL 7040"
+                sub="Venstergrijs"
+                dot="#8c9297"
+              />
+              <ColorButton
+                active={color === "7042"}
+                onClick={() => setColor("7042")}
+                name="RAL 7042"
+                sub="Verkeersgrijs A"
+                dot="#4f5358"
+              />
             </div>
           </div>
 
@@ -196,7 +224,6 @@ export default function App() {
             />
           </div>
         </section>
-
       </div>
     </div>
   );
@@ -205,8 +232,8 @@ export default function App() {
 function USP({ title, text }) {
   return (
     <div className="rounded-2xl bg-white/10 border border-white/10 p-5">
-      <p className="text-xl font-black">{title}</p>
-      <p className="text-slate-300 mt-2">{text}</p>
+      <p className="text-lg font-black">{title}</p>
+      <p className="text-slate-300 mt-2 text-sm leading-relaxed">{text}</p>
     </div>
   );
 }
@@ -214,6 +241,7 @@ function USP({ title, text }) {
 function ColorButton({ active, onClick, name, sub, dot }) {
   return (
     <button
+      type="button"
       onClick={onClick}
       className={
         active
@@ -222,7 +250,10 @@ function ColorButton({ active, onClick, name, sub, dot }) {
       }
     >
       <div className="flex items-center gap-3">
-        <div className="w-8 h-8 rounded-full border border-black/20" style={{ backgroundColor: dot }} />
+        <div
+          className="w-8 h-8 rounded-full border border-black/20"
+          style={{ backgroundColor: dot }}
+        />
         <div>
           <p className="font-black">{name}</p>
           <p className="text-sm opacity-70">{sub}</p>
@@ -234,8 +265,16 @@ function ColorButton({ active, onClick, name, sub, dot }) {
 
 function ResultCard({ label, value, highlight }) {
   return (
-    <div className={highlight ? "rounded-2xl bg-cyan-400 text-slate-950 p-5" : "rounded-2xl bg-white/10 border border-white/10 p-5"}>
-      <p className={highlight ? "text-sm font-bold opacity-80" : "text-sm text-slate-400"}>{label}</p>
+    <div
+      className={
+        highlight
+          ? "rounded-2xl bg-cyan-400 text-slate-950 p-5"
+          : "rounded-2xl bg-white/10 border border-white/10 p-5"
+      }
+    >
+      <p className={highlight ? "text-sm font-bold opacity-80" : "text-sm text-slate-400"}>
+        {label}
+      </p>
       <p className="text-2xl font-black mt-2">{value}</p>
     </div>
   );
@@ -243,26 +282,40 @@ function ResultCard({ label, value, highlight }) {
 
 function Compare({ title, type, price, m2, life, diff, highlight }) {
   return (
-    <div className={highlight ? "rounded-3xl bg-cyan-400 text-slate-950 p-6" : "rounded-3xl bg-white/10 border border-white/10 p-6"}>
-      <p className={highlight ? "text-sm font-bold opacity-80" : "text-sm text-slate-400 font-bold"}>{type}</p>
+    <div
+      className={
+        highlight
+          ? "rounded-3xl bg-cyan-400 text-slate-950 p-6"
+          : "rounded-3xl bg-white/10 border border-white/10 p-6"
+      }
+    >
+      <p className={highlight ? "text-sm font-bold opacity-80" : "text-sm text-slate-400 font-bold"}>
+        {type}
+      </p>
       <h3 className="text-2xl font-black mt-2">{title}</h3>
 
       <div className="mt-6">
-        <p className={highlight ? "text-sm opacity-80" : "text-sm text-slate-400"}>Totale prijs</p>
+        <p className={highlight ? "text-sm opacity-80" : "text-sm text-slate-400"}>
+          Totale prijs
+        </p>
         <p className="text-3xl font-black mt-1">{price}</p>
-        <p className={highlight ? "text-sm opacity-80 mt-1" : "text-sm text-slate-400 mt-1"}>{m2}</p>
+        <p className={highlight ? "text-sm opacity-80 mt-1" : "text-sm text-slate-400 mt-1"}>
+          {m2}
+        </p>
       </div>
 
       <div className="mt-6">
-        <p className={highlight ? "text-sm opacity-80" : "text-sm text-slate-400"}>Levensduur</p>
+        <p className={highlight ? "text-sm opacity-80" : "text-sm text-slate-400"}>
+          Levensduur
+        </p>
         <p className="text-2xl font-black mt-1">{life}</p>
       </div>
 
-      {diff && (
+      {diff ? (
         <div className="mt-5 rounded-2xl bg-black/20 p-4">
           <p className="font-black">{diff}</p>
         </div>
-      )}
+      ) : null}
     </div>
   );
 }
