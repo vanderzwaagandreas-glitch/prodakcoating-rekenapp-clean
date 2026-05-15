@@ -1,0 +1,85 @@
+export default function App() {
+  return (
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "#020617",
+        color: "white",
+        padding: "40px",
+        fontFamily: "Arial",
+      }}
+    >
+      <h1
+        style={{
+          fontSize: "60px",
+          fontWeight: "900",
+          marginBottom: "20px",
+        }}
+      >
+        CoolShield Rekenapp
+      </h1>
+
+      <p
+        style={{
+          color: "#cbd5e1",
+          fontSize: "20px",
+          marginBottom: "40px",
+        }}
+      >
+        Bereken direct de richtprijs voor uw platte dak.
+      </p>
+
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit,minmax(250px,1fr))",
+          gap: "20px",
+        }}
+      >
+        <div
+          style={{
+            background: "#0f172a",
+            padding: "25px",
+            borderRadius: "20px",
+          }}
+        >
+          <h2>Geen sloopwerk</h2>
+          <p>Bestaande dakbedekking blijft liggen</p>
+        </div>
+
+        <div
+          style={{
+            background: "#0f172a",
+            padding: "25px",
+            borderRadius: "20px",
+          }}
+        >
+          <h2>Witte variant</h2>
+          <p>Cool Roof Tech · TSR 91% · SRI 115%</p>
+        </div>
+
+        <div
+          style={{
+            background: "#0f172a",
+            padding: "25px",
+            borderRadius: "20px",
+          }}
+        >
+          <h2>Energie efficiënt</h2>
+          <p>Meer rendement uit zonnepanelen en minder airco nodig</p>
+        </div>
+
+        <div
+          style={{
+            background: "#0f172a",
+            padding: "25px",
+            borderRadius: "20px",
+          }}
+        >
+          <h2>Hydrofoob</h2>
+          <p>100% waterdicht en bestand tegen stilstaand water</p>
+        </div>
+      </div>
+    </div>
+  );
+}
