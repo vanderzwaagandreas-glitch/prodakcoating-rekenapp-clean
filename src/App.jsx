@@ -3,7 +3,7 @@ import jsPDF from "jspdf";
 import emailjs from "@emailjs/browser";
 import oudDakFoto from "./w1.png";
 import nieuwDakFoto from "./w2.png";
-import frontDakFoto from "./front.png";
+import frontDakFoto from "./front2.png";
 
 export default function ProDakcoatingRekenApp() {
   const [step, setStep] = useState(1);
