@@ -198,6 +198,33 @@ export default function ProDakcoatingRekenApp() {
   }
 
   function downloadPdf() {
+    // 1. Check of het dak überhaupt is ingevuld
+    if (!result.area || result.area <= 0) {
+      alert("Vul a.u.b. eerst de afmetingen van uw dak in bij Stap 1.");
+      return; 
+    }
+
+    // 2. Check of de contactgegevens zijn ingevuld
+    if (!form.name || !form.email || !form.phone) {
+      alert("Vul a.u.b. eerst uw naam, e-mailadres en telefoonnummer in bij Stap 3 voordat u de PDF kunt downloaden.");
+      return;
+    }
+
+    // 3. Strenge controle op het e-mailadres
+    const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailCheck.test(form.email)) {
+      alert("Vul a.u.b. een geldig e-mailadres in bij Stap 3 (bijv. info@bedrijf.nl).");
+      return;
+    }
+
+    // 4. Strenge controle op het telefoonnummer
+    const cleanPhone = form.phone.replace(/[^0-9+]/g, '');
+    if (cleanPhone.length < 10) {
+      alert("Vul a.u.b. een geldig telefoonnummer in bij Stap 3 van minimaal 10 cijfers.");
+      return;
+    }
+
+    // Pas als alles hierboven klopt, wordt de PDF gemaakt:
     const doc = new jsPDF();
 
     doc.setFontSize(22);
