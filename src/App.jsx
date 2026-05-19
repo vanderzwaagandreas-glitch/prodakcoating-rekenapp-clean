@@ -209,21 +209,21 @@ export default function ProDakcoatingRekenApp() {
 
     // 2. Check of de contactgegevens zijn ingevuld
     if (!form.name || !form.email || !form.phone) {
-      alert("Vul a.u.b. eerst uw naam, e-mailadres en telefoonnummer in bij Stap 3 voordat u de PDF kunt downloaden.");
+      alert("Vul a.u.b. eerst uw naam, e-mailadres en telefoonnummer in bij Stap 4 voordat u de PDF kunt downloaden.");
       return;
     }
 
     // 3. Strenge controle op het e-mailadres
     const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailCheck.test(form.email)) {
-      alert("Vul a.u.b. een geldig e-mailadres in bij Stap 3 (bijv. info@bedrijf.nl).");
+      alert("Vul a.u.b. een geldig e-mailadres in bij Stap 4 (bijv. info@bedrijf.nl).");
       return;
     }
 
     // 4. Strenge controle op het telefoonnummer
     const cleanPhone = form.phone.replace(/[^0-9+]/g, '');
     if (cleanPhone.length < 10) {
-      alert("Vul a.u.b. een geldig telefoonnummer in bij Stap 3 van minimaal 10 cijfers.");
+      alert("Vul a.u.b. een geldig telefoonnummer in bij Stap 4 van minimaal 10 cijfers.");
       return;
     }
 
