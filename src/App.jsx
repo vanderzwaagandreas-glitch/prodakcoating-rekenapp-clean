@@ -418,7 +418,7 @@ export default function ProDakcoatingRekenApp() {
             </div>
           </div>
           {step === 1 && (
-            <>
+            <div className="fade-in-stap">
               <Title title="1. Kosten dakcoating berekenen" text="Vul het dakoppervlak in en zie direct de richtprijs." />
               <div className="grid md:grid-cols-2 gap-4">
                 <Input label="Dakoppervlak in m²" type="number" value={form.roofArea} onChange={(v) => update("roofArea", v)} />
@@ -494,7 +494,7 @@ export default function ProDakcoatingRekenApp() {
           )}
 
           {step === 2 && (
-            <>
+            <div className="fade-in-stap">
               <Title title="2. Temperatuurvergelijking" text="Indicatieve vergelijking: wit geeft het sterkste verkoelende effect. Grijstinten zijn vooral esthetisch en worden terughoudend berekend." />
               <div className="rounded-3xl overflow-hidden border border-white/10 bg-slate-950 shadow-2xl">
                 <div className="grid md:grid-cols-2 min-h-[420px]">
@@ -590,7 +590,7 @@ export default function ProDakcoatingRekenApp() {
           )}
 
           {step === 3 && (
-            <>
+            <div className="fade-in-stap">
               <Title title="3. Voordeel zonnepanelen en airco" text="Indicatieve berekening op basis van een koeler dakoppervlak." />
               <div className="grid md:grid-cols-3 gap-4">
                 <Input label="Aantal zonnepanelen" type="number" value={form.panels} onChange={(v) => update("panels", v)} />
@@ -615,7 +615,7 @@ export default function ProDakcoatingRekenApp() {
           )}
 
           {step === 4 && (
-            <>
+            <div className="fade-in-stap">
               <Title title="4. Inspectie & onderhoud" text="Vraag eenvoudig een dakinspectie of onderhoud aan. Ook geschikt voor bestaande bitumen daken." />
 
               <div className="grid md:grid-cols-2 gap-4 mb-6">
@@ -710,7 +710,7 @@ export default function ProDakcoatingRekenApp() {
           )}
 
           {step === 5 && (
-            <>
+            <div className="fade-in-stap">
               <Title title="5. Samenvatting" text="Overzicht van uw gekozen dakcoating, kostenindicatie, temperatuurverschil en mogelijke voordelen." />
 
               <div className="grid md:grid-cols-2 gap-4">
