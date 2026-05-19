@@ -143,6 +143,25 @@ export default function ProDakcoatingRekenApp() {
   }, [form]);
 
   function submitForm() {
+    // --- STRENGE CONTROLE OP CONTACTGEGEVENS ---
+    if (!form.name || !form.email || !form.phone) {
+      alert("Vul a.u.b. uw naam, e-mailadres en telefoonnummer in.");
+      return;
+    }
+
+    const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailCheck.test(form.email)) {
+      alert("Vul a.u.b. een geldig e-mailadres in (bijv. info@bedrijf.nl).");
+      return;
+    }
+
+    const cleanPhone = form.phone.replace(/[^0-9+]/g, '');
+    if (cleanPhone.length < 10) {
+      alert("Vul a.u.b. een geldig telefoonnummer in van minimaal 10 cijfers.");
+      return;
+    }
+    // -------------------------------------------
+
     emailjs
       .send(
         "service_f98h5ib",
