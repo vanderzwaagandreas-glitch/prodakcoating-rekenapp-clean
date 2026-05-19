@@ -445,44 +445,45 @@ export default function ProDakcoatingRekenApp() {
               <Title title="2. Temperatuurvergelijking" text="Indicatieve vergelijking: wit geeft het sterkste verkoelende effect. Grijstinten zijn vooral esthetisch en worden terughoudend berekend." />
               <div className="rounded-3xl overflow-hidden border border-white/10 bg-slate-950 shadow-2xl">
                 <div className="grid md:grid-cols-2 min-h-[420px]">
-  
-  {/* ---- LINKER VAK: OUD ZWART DAK ---- */}
-  <div className="relative overflow-hidden flex flex-col justify-between p-6">
-    <img src={oudDakFoto} alt="Oud bitumen dak" className="absolute inset-0 w-full h-full object-cover" />
-    <div className="absolute inset-0 bg-black/60"></div>
+                  
+                  {/* ---- LINKER VAK: OUD ZWART DAK ---- */}
+                  <div className="relative overflow-hidden flex flex-col justify-between p-6">
+                    <img src={oudDakFoto} alt="Oud bitumen dak" className="absolute inset-0 w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-black/60"></div>
 
-    <div className="relative z-10">
-      <p className="text-white font-black uppercase tracking-wide text-sm">VEROUDERD ZWART BITUMEN</p>
-      <h3 className="text-4xl md:text-5xl font-black text-white mt-4 leading-tight">
-        Warmte geabsorbeerd
-      </h3>
-    </div>
+                    <div className="relative z-10">
+                      <p className="text-white font-black uppercase tracking-wide text-sm">VEROUDERD ZWART BITUMEN</p>
+                      <h3 className="text-4xl md:text-5xl font-black text-white mt-4 leading-tight">
+                        Warmte geabsorbeerd
+                      </h3>
+                    </div>
 
-    <div className="relative z-10 rounded-3xl border border-red-500/40 bg-black/80 p-5 max-w-[260px] mt-8">
-      <p className="text-sm uppercase tracking-wide text-slate-300">Oppervlaktetemperatuur</p>
-      <p className="text-6xl font-black text-red-400 mt-3">80°C</p>
-    </div>
-  </div>
+                    <div className="relative z-10 rounded-3xl border border-red-500/40 bg-black/80 p-5 max-w-[260px] mt-8">
+                      <p className="text-sm uppercase tracking-wide text-slate-300">Oppervlaktetemperatuur</p>
+                      <p className="text-6xl font-black text-red-400 mt-3">80°C</p>
+                    </div>
+                  </div>
 
-  {/* ---- RECHTER VAK: NIEUW WIT DAK ---- */}
-  <div className="relative overflow-hidden flex flex-col justify-between p-6">
-    <img src={nieuwDakFoto} alt="Nieuw gecoat dak" className="absolute inset-0 w-full h-full object-cover" />
-    <div className="absolute inset-0 bg-white/60"></div>
+                  {/* ---- RECHTER VAK: NIEUW WIT DAK ---- */}
+                  <div className="relative overflow-hidden flex flex-col justify-between p-6">
+                    <img src={nieuwDakFoto} alt="Nieuw gecoat dak" className="absolute inset-0 w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-white/60"></div>
 
-    <div className="relative z-10 text-right">
-      <p className="text-slate-800 font-black uppercase tracking-wide text-sm">COOLSHIELD NEXTGEN 2K</p>
-      <h3 className="text-4xl md:text-5xl font-black text-slate-950 mt-4 leading-tight">
-        Zonlicht teruggekaatst
-      </h3>
-    </div>
+                    <div className="relative z-10 text-right">
+                      <p className="text-slate-800 font-black uppercase tracking-wide text-sm">COOLSHIELD NEXTGEN 2K</p>
+                      <h3 className="text-4xl md:text-5xl font-black text-slate-950 mt-4 leading-tight">
+                        Zonlicht teruggekaatst
+                      </h3>
+                    </div>
 
-    <div className="relative z-10 rounded-3xl border border-cyan-400 bg-white/90 p-5 max-w-[260px] ml-auto mt-8">
-      <p className="text-sm uppercase tracking-wide text-slate-500">Oppervlaktetemperatuur</p>
-      <p className="text-6xl font-black text-cyan-500 mt-3">40°C</p>
-    </div>
-  </div>
+                    <div className="relative z-10 rounded-3xl border border-cyan-400 bg-white/90 p-5 max-w-[260px] ml-auto mt-8">
+                      <p className="text-sm uppercase tracking-wide text-slate-500">Oppervlaktetemperatuur</p>
+                      <p className="text-6xl font-black text-cyan-500 mt-3">40°C</p>
+                    </div>
+                  </div>
 
-</div>
+                </div>
+              </div>
 
               <div className="mt-5 rounded-3xl bg-cyan-400 text-slate-950 p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
