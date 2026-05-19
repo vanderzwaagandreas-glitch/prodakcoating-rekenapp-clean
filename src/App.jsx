@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from "react";
 import jsPDF from "jspdf";
 import emailjs from "@emailjs/browser";
-import oudDakFoto from "./W1.jpg";
-import nieuwDakFoto from "./W2.jpg";
+import oudDakFoto from "./w1.png";
+import nieuwDakFoto from "./w2.png";
 
 export default function ProDakcoatingRekenApp() {
   const [step, setStep] = useState(1);
