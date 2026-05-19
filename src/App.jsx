@@ -3,6 +3,7 @@ import jsPDF from "jspdf";
 import emailjs from "@emailjs/browser";
 import oudDakFoto from "./w1.png";
 import nieuwDakFoto from "./w2.png";
+import frontDakFoto from "./front.png";
 
 export default function ProDakcoatingRekenApp() {
   const [step, setStep] = useState(1);
@@ -284,7 +285,10 @@ export default function ProDakcoatingRekenApp() {
 
           <div className="mt-6 rounded-3xl overflow-hidden border border-cyan-400/20 relative h-[260px] md:h-[340px] shadow-2xl">
             <img
-              src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1400&auto=format&fit=crop"
+              src={frontDakFoto} 
+  alt="Cool roof coating" 
+  className="absolute inset-0 w-full h-full object-cover" 
+/>
               alt="Cool roof coating"
               className="absolute inset-0 w-full h-full object-cover"
             />
