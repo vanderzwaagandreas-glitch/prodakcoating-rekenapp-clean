@@ -190,6 +190,9 @@ export default function ProDakcoatingRekenApp() {
       )
       .then(() => {
         setSubmitted(true);
+        setStep(5); // <--- DEZE STUURT ZE DIRECT NAAR DE PDF!
+    })
+    .catch((error) => {
       })
       .catch((error) => {
         console.error("EmailJS fout:", error);
