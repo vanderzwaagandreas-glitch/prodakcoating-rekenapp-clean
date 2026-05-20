@@ -490,7 +490,7 @@ export default function ProDakcoatingRekenApp() {
                   />
                 </div>
               </div>
-            </>
+            </div>
           )}
 
           {step === 2 && (
@@ -586,7 +586,7 @@ export default function ProDakcoatingRekenApp() {
                   </ul>
                 </div>
               </div>
-            </>
+            </div>
           )}
 
           {step === 3 && (
@@ -611,7 +611,7 @@ export default function ProDakcoatingRekenApp() {
                 ["Totaal voordeel per jaar", euro(result.yearlyBenefit)],
                 ["Indicatieve terugverdientijd", result.payback ? `${result.payback.toFixed(1)} jaar` : "n.v.t."],
               ]} />
-            </>
+            </div>
           )}
 
           {step === 4 && (
