@@ -706,7 +706,7 @@ export default function ProDakcoatingRekenApp() {
                   </p>
                 </div>
               )}
-            </>
+            </div>
           )}
 
           {step === 5 && (
@@ -812,7 +812,7 @@ export default function ProDakcoatingRekenApp() {
                   <p className="text-slate-300 mt-3">Ga terug naar pagina 4 om uw gegevens in te vullen of de aanvraag te verzenden.</p>
                 </div>
               </div>
-            </>
+            </div>
           )}
         </main>
 
