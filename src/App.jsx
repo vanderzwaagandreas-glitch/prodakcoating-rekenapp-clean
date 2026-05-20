@@ -9,8 +9,8 @@ export default function ProDakcoatingRekenApp() {
   const [step, setStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({
-    roofArea: 250,
-    panels: 40,
+    roofArea: 0, // Standaard leeg/0 om schrikreactie te voorkomen
+    panels: 0,   // Standaard 0
     electricityPrice: 0.28,
     hasAirco: "yes",
     coatingColor: "wit",
@@ -21,12 +21,12 @@ export default function ProDakcoatingRekenApp() {
     address: "",
     notes: "",
     maintenance: "onderhoud",
-    // Nieuwe formulier-velden voor de Online Dak-Scan:
+    // Velden voor de Online Dak-Scan:
     substrate: "bitumen",
     challengeCrack: false,
     challengeWater: false,
+    challengeLeak: false,
     challengeHeat: false,
-    roofPhoto: null,
   });
 
   function update(field, value) {
@@ -165,10 +165,10 @@ export default function ProDakcoatingRekenApp() {
       return;
     }
 
-    // Geselecteerde dak-kenmerken samenvoegen voor EmailJS berichting
     const gekozenKlachten = [
       form.challengeCrack ? "Verouderd / Haarscheurtjes" : "",
       form.challengeWater ? "Stilstaand water" : "",
+      form.challengeLeak ? "Lekkage of zwakke plekken" : "",
       form.challengeHeat ? "Binnenklimaat te warm" : "",
     ].filter(Boolean).join(", ") || "Geen specifieke klachten";
 
@@ -200,7 +200,7 @@ export default function ProDakcoatingRekenApp() {
       )
       .then(() => {
         setSubmitted(true);
-        setStep(6); // Stuurt ze direct naar de samenvatting (Stap 6)
+        setStep(6);
       })
       .catch((error) => {
         console.error("EmailJS fout:", error);
@@ -278,8 +278,7 @@ export default function ProDakcoatingRekenApp() {
     doc.save("ProDakcoating-samenvatting.pdf");
   }
 
-  // De stappenlijst is nu uitgebreid naar 6 stappen
-  const steps = ["Dak-scan", "Kosten", "Temperatuur", "Zonnepanelen & airco", "Inspectie & contact", "Samenvatting"];
+  const steps = ["Dak-scan", "Berekening", "Temperatuur", "Zonnepanelen & airco", "Inspectie & contact", "Samenvatting"];
 
   const substrateLabels = {
     bitumen: "Bitumen (Teer)",
@@ -289,13 +288,13 @@ export default function ProDakcoatingRekenApp() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white p-4 md:p-8 font-sans pb-28">
+    <div className="min-h-screen bg-slate-950 text-white p-4 md:p-8 font-sans pb-36">
       <div className="max-w-4xl mx-auto">
         <section className="rounded-3xl bg-slate-900 border border-white/10 p-6 mb-5 shadow-xl">
           <p className="text-cyan-300 text-sm font-bold uppercase tracking-widest">ProDakcoating</p>
           <h1 className="text-3xl md:text-5xl font-black mt-2">CoolShield Rekenapp</h1>
           <p className="text-slate-300 mt-3 max-w-2xl">
-            Bereken direct de richtprijs van CoolShield NextGen 2K, vergelijk temperaturen trending en ontdek het voordeel voor zonnepanelen, energiekosten en levensduur van uw dak.
+            Bereken direct de richtprijs van CoolShield NextGen 2K, vergelijk temperaturen en ontdek het voordeel voor zonnepanelen, energiekosten en levensduur van uw dak.
           </p>
 
           <div className="mt-5 flex flex-wrap gap-3">
@@ -314,6 +313,7 @@ export default function ProDakcoatingRekenApp() {
               <p className="font-black text-lg mt-1">10 jaar garantie</p>
             </div>
           </div>
+          
           <div className="mt-6 grid md:grid-cols-3 gap-4">
             <div className="rounded-3xl bg-white text-slate-950 p-5 shadow-xl">
               <p className="text-sm text-slate-500 font-bold uppercase tracking-wide">Totale levensduur</p>
@@ -327,8 +327,15 @@ export default function ProDakcoatingRekenApp() {
               <p className="mt-2 text-sm font-semibold">Sterke reductie van daktemperatuur</p>
             </div>
 
+            {/* HIERONDER WORDT DE PRIJS IN STAP 1 VERBORGEN OM AFSCHRIKKEN TE VOORKOMEN */}
             <div className="rounded-3xl bg-white text-slate-950 p-5 shadow-xl">
-              {result.minimumAreaReached ? (
+              {step === 1 ? (
+                <>
+                  <p className="text-sm text-slate-500 font-bold uppercase tracking-wide">Prijsindicatie</p>
+                  <p className="text-xl font-black mt-2 text-cyan-600">Berekend na de scan</p>
+                  <p className="mt-2 text-sm text-slate-600">Zie volgende stap</p>
+                </>
+              ) : result.minimumAreaReached ? (
                 <>
                   <p className="text-sm text-slate-500 font-bold uppercase tracking-wide">Indicatie totaal incl. btw</p>
                   <p className="text-3xl font-black mt-2">{euro(result.incl)}</p>
@@ -359,14 +366,13 @@ export default function ProDakcoatingRekenApp() {
                   Verleng de levensduur van uw platte dak zonder vervanging
                 </h2>
                 <p className="text-slate-200 mt-4 text-base md:text-lg">
-                  Reflecterend, waterdicht en ontwikkeld voor renovatie van bitumen, EPDM and PVC daken. Geschikt voor woningen, bedrijfspanden en grote utiliteitsdaken.
+                  Reflecterend, waterdicht en ontwikkeld voor renovatie van bitumen, EPDM en PVC daken. Geschikt voor woningen, bedrijfspanden en grote utiliteitsdaken.
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Menu aangepast naar grid-cols-3 op mobiel en grid-cols-6 op groter scherm */}
         <nav className="grid grid-cols-3 md:grid-cols-6 gap-2 mb-5">
           {steps.map((label, index) => (
             <button
@@ -392,10 +398,18 @@ export default function ProDakcoatingRekenApp() {
             </div>
 
             <div className="text-right flex items-center gap-4">
+              {/* TAALFOUT GECORRIGEERD NAAR 'Ondergrond' */}
               <div>
-                <p className="text-sm font-semibold">Ondergrund</p>
+                <p className="text-sm font-semibold">Ondergrond</p>
                 <p className="text-lg font-black">{substrateLabels[form.substrate] || "Bitumen"}</p>
               </div>
+
+              {step !== 1 && (
+                <div>
+                  <p className="text-sm font-semibold">CoolShield NextGen 2K</p>
+                  <p className="text-lg font-black">{result.minimumAreaReached ? `${euro(result.pricePerM2)}/m²` : "Maatwerk"}</p>
+                </div>
+              )}
 
               <div className="flex items-center gap-2 bg-white/40 rounded-2xl px-3 py-2">
                 <div
@@ -428,7 +442,7 @@ export default function ProDakcoatingRekenApp() {
             </div>
           </div>
 
-          {/* STAP 1: INTERACTIEVE ONLINE DAK-SCAN */}
+          {/* STAP 1: INTERACTIEVE ONLINE DAK-SCAN MET ADVIESTEKSTEN & LEKKAGE-CHECK */}
           {step === 1 && (
             <div className="fade-in-stap space-y-6">
               <Title title="1. Online Dak-Scan" text="Beoordeel de huidige staat van uw dakbedekking direct online voor een advies op maat." />
@@ -451,8 +465,21 @@ export default function ProDakcoatingRekenApp() {
                     </button>
                   ))}
                 </div>
+                
+                {/* INTERACTIEVE ADVIESTEKSTEN LIVE OP BASIS VAN KEUZE */}
                 <p className="mt-3 text-xs text-cyan-300 font-semibold bg-cyan-950/40 border border-cyan-800/20 rounded-xl p-3">
-                  💡 Onze ademende CoolShield NextGen 2K siliconen-coating vloeit in elke kier en naad voor een 100% naadloos en vloeistofdicht resultaat op {substrateLabels[form.substrate]}.
+                  {form.substrate === "bitumen" && (
+                    <span>💡 <strong>Ideaal fundament!</strong> Onze ademende CoolShield NextGen 2K siliconen-coating vloeit perfect in verouderde bitumen toplagen en vult haarscheurtjes volledig op. Dit vormt een 100% naadloos membraan zonder dat er open vuur of sloopwerk aan te pas komt.</span>
+                  )}
+                  {form.substrate === "epdm" && (
+                    <span>💡 <strong>Perfecte match!</strong> Dankzij de extreme elasticiteit van <strong>250%</strong> beweegt de siliconencoating moeiteloos mee met de sterke thermische werking en temperatuurverschillen van EPDM. Een speciale primer garandeert hierbij een onverwoestbare moleculaire verbinding.</span>
+                  )}
+                  {form.substrate === "pvc" && (
+                    <span>💡 <strong>Maximale bescherming!</strong> Kunststof daken worden door jarenlange uv-straling poreus, met scheurvorming tot gevolg. Onze coating is <strong>100% uv- en weersbestendig</strong>, stopt deze veroudering direct en herstelt de flexibiliteit van uw PVC.</span>
+                  )}
+                  {form.substrate === "beton" && (
+                    <span>💡 <strong>Unieke dampopen werking!</strong> Beton kan makkelijk vocht vasthouden. Onze coating is <strong>100% hydrofoob</strong> (waterafstotend) maar blijft ademend. Eventueel restvocht in de constructie kan wel naar buiten verdampen, maar regenwater kan absoluut niet naar binnen.</span>
+                  )}
                 </p>
               </div>
 
@@ -485,6 +512,20 @@ export default function ProDakcoatingRekenApp() {
                     </div>
                   </label>
 
+                  {/* DE NIEUWE LEKKAGE OPTIE */}
+                  <label className="flex items-center gap-3 bg-white/5 p-4 rounded-2xl border border-white/5 cursor-pointer hover:bg-white/10 transition-all">
+                    <input
+                      type="checkbox"
+                      checked={form.challengeLeak}
+                      onChange={(e) => update("challengeLeak", e.target.checked)}
+                      className="w-5 h-5 rounded accent-cyan-400"
+                    />
+                    <div>
+                      <p className="font-bold">Er is momenteel sprake van lekkage(s) of zwakke plekken</p>
+                      <p className="text-xs text-slate-400">Lekkages en doorvoeren worden tijdens de voorbereiding (Fase 2) extra verstevigd met specifieke glasvezelbewapening voor 100% waterdichte zekerheid.</p>
+                    </div>
+                  </label>
+
                   <label className="flex items-center gap-3 bg-white/5 p-4 rounded-2xl border border-white/5 cursor-pointer hover:bg-white/10 transition-all">
                     <input
                       type="checkbox"
@@ -500,32 +541,31 @@ export default function ProDakcoatingRekenApp() {
                 </div>
               </div>
 
+              {/* GROTE GROENE WHATSAPP VERWIJZING */}
               <div className="border-t border-white/10 pt-5">
-                <span className="text-sm font-bold text-slate-300 block mb-2">Foto van uw dak uploaden (Optioneel)</span>
-                <label className="mt-2 flex flex-col items-center justify-center border-2 border-dashed border-white/20 hover:border-cyan-400/50 rounded-2xl p-6 bg-white/5 cursor-pointer transition-all">
-                  <span className="text-2xl mb-1">📸</span>
-                  <span className="text-sm font-bold">Klik hier om een foto te selecteren</span>
-                  <span className="text-xs text-slate-400 mt-1 text-center">Onze specialisten beoordelen de huidige laag gratis op afstand op hechting en eventuele vochtinsluiting.</span>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={(e) => update("roofPhoto", e.target.files[0] ? e.target.files[0].name : null)}
-                  />
-                </label>
-                {form.roofPhoto && (
-                  <p className="text-xs text-green-400 font-bold mt-2">✓ Geselecteerd bestand: {form.roofPhoto}</p>
-                )}
+                <span className="text-sm font-bold text-slate-300 block mb-2">Foto van uw dak doorsturen (Aanbevolen)</span>
+                <a
+                  href="https://wa.me/31612345678?text=Hallo%20ProDakcoating%2C%20ik%20heb%20zojuist%20de%20calculator%20ingevuld%20en%20stuur%20hierbij%20een%20foto%20van%20mijn%20dak."
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-2 flex flex-col items-center justify-center border-2 border-dashed border-emerald-500/30 hover:border-emerald-400 rounded-2xl p-6 bg-emerald-500/5 text-center transition-all group cursor-pointer"
+                >
+                  <span className="text-3xl mb-1">💬</span>
+                  <span className="text-base font-black text-emerald-400 group-hover:text-emerald-300 transition-colors">Stuur foto('s) direct via WhatsApp</span>
+                  <span className="text-xs text-slate-400 mt-2 max-w-md">
+                    Klik hier om direct een chat te openen. Onze specialisten controleren de huidige laag gratis op afstand op hechting en eventuele vochtinsluiting.
+                  </span>
+                </a>
               </div>
             </div>
           )}
 
-          {/* STAP 2: KOSTEN BEREKENEN */}
+          {/* STAP 2: BEREKENING (HERNOEMD VAN KOSTEN) */}
           {step === 2 && (
             <div className="fade-in-stap">
               <Title title="2. Kosten dakcoating berekenen" text="Vul het dakoppervlak in en zie direct de richtprijs." />
               <div className="grid md:grid-cols-2 gap-4">
-                <Input label="Dakoppervlak in m²" type="number" value={form.roofArea} onChange={(v) => update("roofArea", v)} />
+                <Input label="Dakoppervlak in m²" type="number" value={form.roofArea || ""} onChange={(v) => update("roofArea", v)} />
                 <Select 
                   label="Btw type" 
                   value={form.customerType} 
@@ -567,13 +607,15 @@ export default function ProDakcoatingRekenApp() {
                 </div>
               </div>
 
+              {/* LIVE PRIJSVERGELIJKING MET M2 EN TOTAALPRIJZEN ONDER ELKAAR */}
               <div className="mt-8">
-                <h3 className="text-2xl font-black mb-4">Prijsvergelijking & levensduur</h3>
+                <h3 className="text-2xl font-black mb-4">Prijsvergelijking &amp; levensduur</h3>
                 <div className="grid md:grid-cols-3 gap-4">
                   <CompareCard
                     title="CoolShield 2K"
                     subtitle="Professioneel systeem"
                     price={`${euro(result.pricePerM2)}/m²`}
+                    totalPrice={result.area > 0 ? (result.minimumAreaReached ? euro(result.excl) : "Maatwerkofferte") : "Vul m² in voor totaalprijs"}
                     lifespan="30-60 jaar"
                     highlight
                   />
@@ -582,6 +624,7 @@ export default function ProDakcoatingRekenApp() {
                     title="1-component coating"
                     subtitle="Consumenten coating"
                     price={result.area >= 500 ? "± €30/m²" : "€40 - €50/m²"}
+                    totalPrice={result.area > 0 ? (result.area >= 500 ? euro(result.oneComponentMinTotal) : `${euro(result.oneComponentMinTotal)} - ${euro(result.oneComponentMaxTotal)}`) : "Vul m² in voor totaalprijs"}
                     lifespan="20-25 jaar"
                   />
 
@@ -589,6 +632,7 @@ export default function ProDakcoatingRekenApp() {
                     title="Nieuw bitumen dak"
                     subtitle="Traditionele vervanging"
                     price="€75 - €160/m²"
+                    totalPrice={result.area > 0 ? `${euro(result.bitumenMinTotal)} - ${euro(result.bitumenMaxTotal)}` : "Vul m² in voor totaalprijs"}
                     lifespan="20-30 jaar"
                   />
                 </div>
@@ -691,12 +735,12 @@ export default function ProDakcoatingRekenApp() {
             </div>
           )}
 
-          {/* STAP 4: ZONNEPANELEN & AIRCO + INTELLIGENTE METRIC TRIGGER */}
+          {/* STAP 4: ZONNEPANELEN &amp; AIRCO */}
           {step === 4 && (
             <div className="fade-in-stap space-y-6">
               <Title title="4. Voordeel zonnepanelen en airco" text="Indicatieve berekening op basis van een gekoeld dakoppervlak." />
               <div className="grid md:grid-cols-3 gap-4">
-                <Input label="Aantal zonnepanelen" type="number" value={form.panels} onChange={(v) => update("panels", v)} />
+                <Input label="Aantal zonnepanelen" type="number" value={form.panels || ""} onChange={(v) => update("panels", v)} />
                 <Input label="Stroomprijs €/kWh" type="number" step="0.01" value={form.electricityPrice} onChange={(v) => update("electricityPrice", v)} />
                 <Select 
                   label="Airco aanwezig?" 
@@ -706,7 +750,6 @@ export default function ProDakcoatingRekenApp() {
                 />
               </div>
 
-              {/* DYNAMISCHE EFFICIËNTIE TRIGGER VANUIT INFORMATIEFOLDER */}
               {Number(form.panels) > 0 && (
                 <div className="rounded-3xl bg-cyan-500/10 border border-cyan-400/30 p-5 flex items-start gap-4 fade-in-stap">
                   <span className="text-3xl">💡</span>
@@ -738,10 +781,10 @@ export default function ProDakcoatingRekenApp() {
             </div>
           )}
 
-          {/* STAP 5: INSPECTIE & ONDERHOUD */}
+          {/* STAP 5: INSPECTIE &amp; ONDERHOUD */}
           {step === 5 && (
             <div className="fade-in-stap">
-              <Title title="5. Inspectie & onderhoud" text="Vraag eenvoudig een dakinspectie of onderhoud aan. Ook geschikt voor bestaande bitumen daken." />
+              <Title title="5. Inspectie &amp; onderhoud" text="Vraag eenvoudig een dakinspectie of onderhoud aan. Ook geschikt voor bestaande bitumen daken." />
 
               <div className="grid md:grid-cols-2 gap-4 mb-6">
                 <Choice
@@ -856,7 +899,7 @@ export default function ProDakcoatingRekenApp() {
                 </div>
 
                 <div className="rounded-3xl bg-white/10 border border-white/10 p-6">
-                  <p className="text-sm text-slate-400 uppercase font-bold">Dakoppervlak & Type</p>
+                  <p className="text-sm text-slate-400 uppercase font-bold">Dakoppervlak &amp; Type</p>
                   <p className="text-5xl font-black mt-2">{number(result.area)} m²</p>
                   <p className="text-slate-300 mt-3">Ondergrond: {substrateLabels[form.substrate]}</p>
                 </div>
@@ -891,35 +934,34 @@ export default function ProDakcoatingRekenApp() {
                 </div>
               )}
 
+              {/* PRIJSVERGELIJKING SAMENVATTING MET BEIDE PRIJZEN LIVE BEREKEND */}
               <div className="mt-6 rounded-3xl bg-white/10 border border-white/10 p-6">
                 <p className="text-sm uppercase tracking-wide text-slate-400 font-bold">Prijsverschil op basis van {number(result.area)} m²</p>
 
                 <div className="grid md:grid-cols-3 gap-4 mt-4">
                   <div className="rounded-2xl bg-cyan-400 text-slate-950 p-4">
-                    <p className="text-sm font-bold uppercase">CoolShield 2K</p>
-                    <p className="text-3xl font-black mt-2">{result.minimumAreaReached ? euro(result.excl) : "Offerte"}</p>
-                    <p className="text-sm mt-2">{result.minimumAreaReached ? `${euro(result.pricePerM2)}/m² excl. btw` : "Maatwerk"}</p>
+                    <p className="text-xs font-bold uppercase">CoolShield 2K</p>
+                    <p className="text-xl font-bold mt-1">{result.minimumAreaReached ? `${euro(result.pricePerM2)}/m²` : "Maatwerk"}</p>
+                    <p className="text-2xl font-black mt-1">{result.area > 0 ? (result.minimumAreaReached ? euro(result.excl) : "Maatwerk") : "Vul m² in"}</p>
                   </div>
 
                   <div className="rounded-2xl bg-white/10 border border-white/10 p-4">
-                    <p className="text-sm font-bold uppercase text-slate-400">1-component coating</p>
-                    <p className="text-3xl font-black mt-2">
-                      {result.area >= 500
-                        ? euro(result.oneComponentMinTotal)
-                        : `${euro(result.oneComponentMinTotal)} - ${euro(result.oneComponentMaxTotal)}`}
-                    </p>
-                    <p className="text-sm text-slate-400 mt-2">
-                      Verschil t.o.v. CoolShield: {result.area >= 500
-                        ? euro(result.oneComponentDifferenceMin)
-                        : `${euro(result.oneComponentDifferenceMin)} - ${euro(result.oneComponentDifferenceMax)}`}
+                    <p className="text-xs font-bold uppercase text-slate-400">1-component coating</p>
+                    <p className="text-xl font-bold mt-1">{result.area >= 500 ? "± €30/m²" : "€40 - €50/m²"}</p>
+                    <p className="text-2xl font-black mt-1">
+                      {result.area > 0
+                        ? (result.area >= 500
+                            ? euro(result.oneComponentMinTotal)
+                            : `${euro(result.oneComponentMinTotal)} - ${euro(result.oneComponentMaxTotal)}`)
+                        : "Vul m² in"}
                     </p>
                   </div>
 
                   <div className="rounded-2xl bg-white/10 border border-white/10 p-4">
-                    <p className="text-sm font-bold uppercase text-slate-400">Nieuw bitumen dak</p>
-                    <p className="text-3xl font-black mt-2">{euro(result.bitumenMinTotal)} - {euro(result.bitumenMaxTotal)}</p>
-                    <p className="text-sm text-slate-400 mt-2">
-                      Verschil t.o.v. CoolShield: {euro(result.bitumenDifferenceMin)} - {euro(result.bitumenDifferenceMax)}
+                    <p className="text-xs font-bold uppercase text-slate-400">Nieuw bitumen dak</p>
+                    <p className="text-xl font-bold mt-1">€75 - €160/m²</p>
+                    <p className="text-2xl font-black mt-1">
+                      {result.area > 0 ? `${euro(result.bitumenMinTotal)} - ${euro(result.bitumenMaxTotal)}` : "Vul m² in"}
                     </p>
                   </div>
                 </div>
@@ -954,40 +996,42 @@ export default function ProDakcoatingRekenApp() {
         </p>
       </div>
 
-      {/* VASTE STRENG GEFORMULEERDE TRUST-BALK ONDERIN (REIST BIJ ELKE STAP MEE) */}
-      <div className="fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-md border-t border-white/10 px-4 py-3 z-50 shadow-2xl transition-all">
-        <div className="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3 text-center text-[11px] md:text-xs">
-          <div className="flex items-center gap-2 justify-center md:justify-start">
-            <span className="text-lg md:text-xl">🛡️</span>
+      {/* VERGROTE EN ROBUUSTE TRUST-BALK ONDERIN HET SCHERM (ALTIJD ZICHTBAAR) */}
+      <div className="fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-md border-t border-white/10 px-4 py-5 z-50 shadow-2xl transition-all">
+        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+          
+          <div className="flex items-center gap-3 justify-center md:justify-start">
+            <span className="text-2xl md:text-4xl">🛡️</span>
             <div className="text-left">
-              <p className="font-black text-white">10 Jaar Garantie</p>
-              <p className="text-[10px] text-slate-400 hidden sm:block">Zekerheid ProDakcoating</p>
+              <p className="font-extrabold text-white text-xs sm:text-sm md:text-base tracking-wide">10 Jaar Garantie</p>
+              <p className="text-[11px] md:text-xs text-slate-400 block mt-0.5">Volledige productzekerheid</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 justify-center md:justify-start">
-            <span className="text-lg md:text-xl">⏳</span>
+          <div className="flex items-center gap-3 justify-center md:justify-start">
+            <span className="text-2xl md:text-4xl">⏳</span>
             <div className="text-left">
-              <p className="font-black text-white">30-60 Jaar Levensduur</p>
-              <p className="text-[10px] text-slate-400 hidden sm:block">Hoogwaardig silicone systeem</p>
+              <p className="font-extrabold text-white text-xs sm:text-sm md:text-base tracking-wide">30-60 Jaar Levensduur</p>
+              <p className="text-[11px] md:text-xs text-slate-400 block mt-0.5">Hoogwaardig 2K silicone</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 justify-center md:justify-start">
-            <span className="text-lg md:text-xl">💰</span>
+          <div className="flex items-center gap-3 justify-center md:justify-start">
+            <span className="text-2xl md:text-4xl">💰</span>
             <div className="text-left">
-              <p className="font-black text-white">Tot 70% Goedkoper</p>
-              <p className="text-[10px] text-slate-400 hidden sm:block">Vergeleken met dakvervanging</p>
+              <p className="font-extrabold text-white text-xs sm:text-sm md:text-base tracking-wide">Tot 70% Goedkoper</p>
+              <p className="text-[11px] md:text-xs text-slate-400 block mt-0.5">Bespaar direct op sloopwerk</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 justify-center md:justify-start">
-            <span className="text-lg md:text-xl">🔥</span>
+          <div className="flex items-center gap-3 justify-center md:justify-start">
+            <span className="text-2xl md:text-4xl">🔥</span>
             <div className="text-left">
-              <p className="font-black text-white">100% Brandveilig</p>
-              <p className="text-[10px] text-slate-400 hidden sm:block">Applicatie zonder open vuur</p>
+              <p className="font-extrabold text-white text-xs sm:text-sm md:text-base tracking-wide">100% Brandveilig</p>
+              <p className="text-[11px] md:text-xs text-slate-400 block mt-0.5">Applicatie zonder open vuur</p>
             </div>
           </div>
+
         </div>
       </div>
 
@@ -1070,20 +1114,26 @@ function Grid({ items }) {
   );
 }
 
-function CompareCard({ title, subtitle, price, lifespan, highlight }) {
+{/* AANGEPASTE COMPARECARD DIE LIVE REAGEERT OP DE M2 INVOER */}
+function CompareCard({ title, subtitle, price, totalPrice, lifespan, highlight }) {
   return (
-    <div className={highlight ? "rounded-3xl bg-cyan-400 text-slate-950 p-6" : "rounded-3xl bg-white/10 border border-white/10 p-6"}>
+    <div className={highlight ? "rounded-3xl bg-cyan-400 text-slate-950 p-6 shadow-xl" : "rounded-3xl bg-white/10 border border-white/10 p-6"}>
       <p className="text-sm font-bold opacity-80">{subtitle}</p>
       <h4 className="text-2xl font-black mt-1">{title}</h4>
 
-      <div className="mt-5">
-        <p className={highlight ? "text-slate-700 text-sm" : "text-slate-400 text-sm"}>Indicatieve prijs</p>
-        <p className="text-3xl font-black">{price}</p>
+      <div className="mt-4">
+        <p className={highlight ? "text-slate-700 text-xs font-bold" : "text-slate-400 text-xs font-bold"}>Tarief per m²</p>
+        <p className="text-xl font-black">{price}</p>
       </div>
 
-      <div className="mt-5">
-        <p className={highlight ? "text-slate-700 text-sm" : "text-slate-400 text-sm"}>Levensduur</p>
-        <p className="text-2xl font-black">{lifespan}</p>
+      <div className="mt-3">
+        <p className={highlight ? "text-slate-700 text-xs font-bold" : "text-slate-400 text-xs font-bold"}>Indicatieve totaalprijs</p>
+        <p className="text-2xl font-black text-emerald-400">{totalPrice}</p>
+      </div>
+
+      <div className="mt-4 border-t border-white/10 pt-3 opacity-90">
+        <p className={highlight ? "text-slate-700 text-xs font-bold" : "text-slate-400 text-xs font-bold"}>Levensduur</p>
+        <p className="text-xl font-black">{lifespan}</p>
       </div>
     </div>
   );
