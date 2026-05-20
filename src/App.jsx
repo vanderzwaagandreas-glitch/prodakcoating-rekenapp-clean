@@ -1128,7 +1128,7 @@ function CompareCard({ title, subtitle, price, totalPrice, lifespan, highlight }
 
       <div className="mt-3">
         <p className={highlight ? "text-slate-700 text-xs font-bold" : "text-slate-400 text-xs font-bold"}>Indicatieve totaalprijs</p>
-        1131:   <p className={highlight ? "text-2xl font-black text-slate-950" : "text-2xl font-black text-red-500"}>{totalPrice}</p>
+      <p className={highlight ? "text-2xl font-black text-slate-950" : "text-2xl font-black text-red-500"}>{totalPrice}</p>
       </div>
 
       <div className="mt-4 border-t border-white/10 pt-3 opacity-90">
