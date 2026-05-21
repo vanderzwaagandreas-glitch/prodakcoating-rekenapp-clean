@@ -199,7 +199,7 @@ export default function ProDakcoatingRekenApp() {
         "znaYMMFGl6KUB2SmO"
       )
       .then(() => {
-        trackGAEvent("calculator_formulier_verzonden"); // GA4 formulier-verzonden tracker
+        trackGAEvent("calculator_formulier_verzonden"); 
         setSubmitted(true);
         setStep(6);
       })
@@ -220,7 +220,7 @@ export default function ProDakcoatingRekenApp() {
       return;
     }
 
-    trackGAEvent("calculator_pdf_gedownload"); // GA4 pdf-download tracker
+    trackGAEvent("calculator_pdf_gedownload"); 
     const doc = new jsPDF();
 
     doc.setFontSize(22);
@@ -244,7 +244,7 @@ export default function ProDakcoatingRekenApp() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white p-4 md:p-8 font-sans pb-36">
+    <div className="min-h-screen bg-slate-950 text-white p-4 md:p-8 font-sans pb-64">
       <div className="max-w-4xl mx-auto">
         <section className="rounded-3xl bg-slate-900 border border-white/10 p-6 mb-5 shadow-xl">
           <p className="text-cyan-300 text-sm font-bold uppercase tracking-widest">ProDakcoating</p>
@@ -370,7 +370,7 @@ export default function ProDakcoatingRekenApp() {
                 </div>
                 <p className="mt-3 text-xs text-cyan-300 font-semibold bg-cyan-950/40 border border-cyan-800/20 rounded-xl p-3">
                   {form.substrate === "bitumen" && <span>💡 <strong>Ideaal fundament!</strong> Onze ademende CoolShield NextGen 2K silicone-coating vloeit perfect in verouderde bitumen toplagen.</span>}
-                  {form.substrate === "epdm" && <span>💡 <strong>Perfecte match!</strong> Dankzij de extreme elasticiteit van 250% beweegt de silicone-coating moeiteloos mee met EPDM.</span>}
+                  {form.substrate === "epdm" && <span>💡 <strong>Perfecte match!</strong> Dankzij de extreme elasticiteit van 250% beweegt the silicone-coating moeiteloos mee met EPDM.</span>}
                   {form.substrate === "pvc" && <span>💡 <strong>Maximale bescherming!</strong> Onze coating stopt poreusheid en uv-veroudering van uw PVC direct.</span>}
                   {form.substrate === "beton" && <span>💡 <strong>Dampopen werking!</strong> 100% hydrofoob maar ademend, restvocht kan wel naar buiten verdampen.</span>}
                 </p>
@@ -410,12 +410,10 @@ export default function ProDakcoatingRekenApp() {
                 </div>
               </div>
 
-              {/* WHATSAPP-KNOP MET REGISTRATIE EVENT TRACKER */}
               <div className="border-t border-white/10 pt-5">
                 <span className="text-sm font-bold text-slate-300 block mb-2">Foto van uw dak doorsturen (Aanbevolen)</span>
-                {/* PAS HIERONDER BIJ HOEFT STRAKS BIJ wa.me/ JOUW NUMMER IN TE VULLEN IN PLAATS VAN 31612345678 */}
                 <a
-                  href="https://wa.me/31621694200?text=Hallo%20ProDakcoating%2C%20ik%20heb%20zojuist%20de%20calculator%20ingevuld%20en%20stuur%20hierbij%20een%20foto%20van%20mijn%20dak."
+                  href="https://wa.me/3121694200?text=Hallo%20ProDakcoating%2C%20ik%20heb%20zojuist%20de%20calculator%20ingevuld%20en%20stuur%20hierbij%20een%20foto%20van%20mijn%20dak."
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => trackGAEvent("klik_whatsapp_foto")}
@@ -586,9 +584,9 @@ export default function ProDakcoatingRekenApp() {
               <div className="mt-6 rounded-3xl bg-white/10 border border-white/10 p-6">
                 <p className="text-sm uppercase font-bold text-slate-400">Prijsverschil op basis van {number(result.area)} m²</p>
                 <div className="grid md:grid-cols-3 gap-4 mt-4">
-                  <CompareCard title="CoolShield 2K" subtitle="Professioneel systeem" price={`${euro(result.pricePerM2)}/m²`} totalPrice={result.area > 0 ? euro(result.excl) : "m² invoeren"} lifespan="30-60 jaar" highlight />
-                  <CompareCard title="1-component coating" subtitle="Consumenten coating" price="Consument" totalPrice={result.area > 0 ? euro(result.oneComponentMinTotal) : "m² invoeren"} lifespan="20-25 jaar" />
-                  <CompareCard title="Nieuw bitumen dak" subtitle="Traditionele vervanging" price="Traditioneel" totalPrice={result.area > 0 ? euro(result.bitumenMinTotal) : "m² invoeren"} lifespan="20-30 jaar" />
+                  <CompareCard title="CoolShield 2K" subtitle="Professioneel systeem" price={`${euro(result.pricePerM2)}/m²`} totalPrice={result.area > 0 ? (result.minimumAreaReached ? euro(result.excl) : "Maatwerk") : "m² invoeren"} lifespan="30-60 jaar" highlight />
+                  <CompareCard title="1-component coating" subtitle="Consumenten coating" price={result.area >= 500 ? "± €30/m²" : "€40 - €50/m²"} totalPrice={result.area > 0 ? (result.area >= 500 ? euro(result.oneComponentMinTotal) : `${euro(result.oneComponentMinTotal)} - ${euro(result.oneComponentMaxTotal)}`) : "m² invoeren"} lifespan="20-25 jaar" />
+                  <CompareCard title="Nieuw bitumen dak" subtitle="Traditionele vervanging" price="€75 - €160/m²" totalPrice={result.area > 0 ? `${euro(result.bitumenMinTotal)} - ${euro(result.bitumenMaxTotal)}` : "m² invoeren"} lifespan="20-30 jaar" />
                 </div>
               </div>
               <div className="mt-6 grid md:grid-cols-2 gap-4">
@@ -606,24 +604,33 @@ export default function ProDakcoatingRekenApp() {
         </div>
       </div>
 
-      {/* ROBUUSTE TRUST-BALK ONDERIN HET SCHERM */}
-      <div className="fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-md border-t border-white/10 px-4 py-5 z-50 shadow-2xl">
-        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-          <div className="flex items-center gap-3 justify-center md:justify-start">
-            <span className="text-2xl md:text-4xl">🛡️</span>
-            <div className="text-left"><p className="font-extrabold text-white text-xs sm:text-sm md:text-base">10 Jaar Garantie</p><p className="text-[11px] md:text-xs text-slate-400 mt-0.5">Volledige productzekerheid</p></div>
-          </div>
-          <div className="flex items-center gap-3 justify-center md:justify-start">
-            <span className="text-2xl md:text-4xl">⏳</span>
-            <div className="text-left"><p className="font-extrabold text-white text-xs sm:text-sm md:text-base">30-60 Jaar Levensduur</p><p className="text-[11px] md:text-xs text-slate-400 mt-0.5">Hoogwaardig 2K silicone</p></div>
-          </div>
-          <div className="flex items-center gap-3 justify-center md:justify-start">
-            <span className="text-2xl md:text-4xl">💰</span>
-            <div className="text-left"><p className="font-extrabold text-white text-xs sm:text-sm md:text-base">Tot 70% Goedkoper</p><p className="text-[11px] md:text-xs text-slate-400 mt-0.5">Bespaar op sloopwerk</p></div>
-          </div>
-          <div className="flex items-center gap-3 justify-center md:justify-start">
-            <span className="text-2xl md:text-4xl">🔥</span>
-            <div className="text-left"><p className="font-extrabold text-white text-xs sm:text-sm md:text-base">100% Brandveilig</p><p className="text-[11px] md:text-xs text-slate-400 mt-0.5">Applicatie zonder open vuur</p></div>
+      {/* ROBUUSTE TRUST-BALK MET TELEFOONNUMMER ONDERIN HET SCHERM */}
+      <div className="fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-md border-t border-white/10 z-50 shadow-2xl">
+        <a 
+          href="tel:+3121694200" 
+          className="block w-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black text-center py-2 px-4 text-sm md:text-base transition-colors shadow-md"
+        >
+          📞 Vragen of direct advies? Bel onze specialisten: 021 694 200
+        </a>
+
+        <div className="px-4 py-4 md:py-5">
+          <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div className="flex items-center gap-3 justify-center md:justify-start">
+              <span className="text-2xl md:text-4xl">🛡️</span>
+              <div className="text-left"><p className="font-extrabold text-white text-xs sm:text-sm md:text-base">10 Jaar Garantie</p><p className="text-[11px] md:text-xs text-slate-400 mt-0.5">Volledige productzekerheid</p></div>
+            </div>
+            <div className="flex items-center gap-3 justify-center md:justify-start">
+              <span className="text-2xl md:text-4xl">⏳</span>
+              <div className="text-left"><p className="font-extrabold text-white text-xs sm:text-sm md:text-base">30-60 Jaar Levensduur</p><p className="text-[11px] md:text-xs text-slate-400 mt-0.5">Hoogwaardig 2K silicone</p></div>
+            </div>
+            <div className="flex items-center gap-3 justify-center md:justify-start">
+              <span className="text-2xl md:text-4xl">💰</span>
+              <div className="text-left"><p className="font-extrabold text-white text-xs sm:text-sm md:text-base">Tot 70% Goedkoper</p><p className="text-[11px] md:text-xs text-slate-400 mt-0.5">Bespaar op sloopwerk</p></div>
+            </div>
+            <div className="flex items-center gap-3 justify-center md:justify-start">
+              <span className="text-2xl md:text-4xl">🔥</span>
+              <div className="text-left"><p className="font-extrabold text-white text-xs sm:text-sm md:text-base">100% Brandveilig</p><p className="text-[11px] md:text-xs text-slate-400 mt-0.5">Applicatie zonder open vuur</p></div>
+            </div>
           </div>
         </div>
       </div>
@@ -694,7 +701,6 @@ function CompareCard({ title, subtitle, price, totalPrice, lifespan, highlight }
       </div>
       <div className="mt-3">
         <p className={highlight ? "text-slate-700 text-xs font-bold" : "text-slate-400 text-xs font-bold"}>Indicatieve totaalprijs</p>
-        {/* Hier kleurt hij nu diepzwart als de kaart CoolShield is, anders springt de concurrentie op ROOD */}
         <p className={highlight ? "text-2xl font-black text-slate-950" : "text-2xl font-black text-red-500"}>
           {totalPrice}
         </p>
