@@ -610,7 +610,7 @@ export default function ProDakcoatingRekenApp() {
       {/* ROBUUSTE TRUST-BALK MET TELEFOONNUMMER ONDERIN HET SCHERM */}
       <div className="fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-md border-t border-white/10 z-50 shadow-2xl">
         <a 
-          href="tel:+3121694200" 
+          href="tel:+31621694200" 
           className="block w-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black text-center py-2 px-4 text-sm md:text-base transition-colors shadow-md"
         >
           📞 Vragen of direct advies? Bel onze specialisten: 06 - 21 69 42 00
