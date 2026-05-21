@@ -415,7 +415,7 @@ export default function ProDakcoatingRekenApp() {
                 <span className="text-sm font-bold text-slate-300 block mb-2">Foto van uw dak doorsturen (Aanbevolen)</span>
                 {/* PAS HIERONDER BIJ HOEFT STRAKS BIJ wa.me/ JOUW NUMMER IN TE VULLEN IN PLAATS VAN 31612345678 */}
                 <a
-                  href="https://wa.me/31612345678?text=Hallo%20ProDakcoating%2C%20ik%20heb%20zojuist%20de%20calculator%20ingevuld%20en%20stuur%20hierbij%20een%20foto%20van%20mijn%20dak."
+                  href="https://wa.me/31621694200?text=Hallo%20ProDakcoating%2C%20ik%20heb%20zojuist%20de%20calculator%20ingevuld%20en%20stuur%20hierbij%20een%20foto%20van%20mijn%20dak."
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => trackGAEvent("klik_whatsapp_foto")}
