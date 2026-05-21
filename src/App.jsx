@@ -613,7 +613,7 @@ export default function ProDakcoatingRekenApp() {
           href="tel:+3121694200" 
           className="block w-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black text-center py-2 px-4 text-sm md:text-base transition-colors shadow-md"
         >
-          📞 Vragen of direct advies? Bel onze specialisten: 021 694 200
+          📞 Vragen of direct advies? Bel onze specialisten: 06 - 21 69 42 00
         </a>
 
         <div className="px-4 py-4 md:py-5">
