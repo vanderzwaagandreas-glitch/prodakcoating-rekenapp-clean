@@ -244,7 +244,8 @@ export default function ProDakcoatingRekenApp() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white p-4 md:p-8 font-sans pb-72">
+    // HARDCODED PADDING-BOTTOM ZODAT DE TRUSTBALK NERGENS MEER OVERHEEN VALT
+    <div className="min-h-screen bg-slate-950 text-white p-4 md:p-8 font-sans" style={{ paddingBottom: "350px" }}>
       <div className="max-w-4xl mx-auto">
         <section className="rounded-3xl bg-slate-900 border border-white/10 p-6 mb-5 shadow-xl">
           <p className="text-cyan-300 text-sm font-bold uppercase tracking-widest">ProDakcoating</p>
@@ -596,12 +597,14 @@ export default function ProDakcoatingRekenApp() {
               </div>
             </div>
           )}
-        </main>
 
-        <div className="flex justify-between mt-5">
-          <button type="button" disabled={step === 1} onClick={() => handleSetStep(step - 1)} className="rounded-2xl px-5 py-3 bg-white/10 disabled:opacity-30 font-bold">Vorige</button>
-          <button type="button" disabled={step === 6} onClick={() => handleSetStep(Math.min(6, step + 1))} className="rounded-2xl px-5 py-3 bg-cyan-400 text-slate-950 disabled:opacity-30 font-black">Volgende</button>
-        </div>
+          {/* VASTE KNOPPEN IN HET GRIJZE BLOK */}
+          <div className="mt-8 pt-6 border-t border-white/10 flex justify-between items-center">
+            <button type="button" disabled={step === 1} onClick={() => handleSetStep(step - 1)} className="rounded-2xl px-6 py-4 bg-white/10 hover:bg-white/20 disabled:opacity-30 font-bold transition-all">Vorige</button>
+            <button type="button" disabled={step === 6} onClick={() => handleSetStep(Math.min(6, step + 1))} className="rounded-2xl px-6 py-4 bg-cyan-400 hover:bg-cyan-300 text-slate-950 disabled:opacity-30 font-black transition-all">Volgende</button>
+          </div>
+
+        </main>
       </div>
 
       {/* ROBUUSTE TRUST-BALK MET TELEFOONNUMMER ONDERIN HET SCHERM */}
