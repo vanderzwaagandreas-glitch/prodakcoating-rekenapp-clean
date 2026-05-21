@@ -244,7 +244,7 @@ export default function ProDakcoatingRekenApp() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white p-4 md:p-8 font-sans pb-64">
+    <div className="min-h-screen bg-slate-950 text-white p-4 md:p-8 font-sans pb-52">
       <div className="max-w-4xl mx-auto">
         <section className="rounded-3xl bg-slate-900 border border-white/10 p-6 mb-5 shadow-xl">
           <p className="text-cyan-300 text-sm font-bold uppercase tracking-widest">ProDakcoating</p>
@@ -328,7 +328,7 @@ export default function ProDakcoatingRekenApp() {
           ))}
         </nav>
 
-        <main className="rounded-3xl bg-slate-900 border border-white/10 p-6 md:p-8 shadow-xl">
+        <main className="rounded-3xl bg-slate-900 border border-white/10 p-6 md:p-8 shadow-xl relative">
           <div className="mb-6 flex items-center justify-between rounded-2xl bg-cyan-400 text-slate-950 px-5 py-4">
             <div>
               <p className="text-sm font-bold uppercase tracking-wide">Geselecteerd dakoppervlak</p>
@@ -370,7 +370,7 @@ export default function ProDakcoatingRekenApp() {
                 </div>
                 <p className="mt-3 text-xs text-cyan-300 font-semibold bg-cyan-950/40 border border-cyan-800/20 rounded-xl p-3">
                   {form.substrate === "bitumen" && <span>💡 <strong>Ideaal fundament!</strong> Onze ademende CoolShield NextGen 2K silicone-coating vloeit perfect in verouderde bitumen toplagen.</span>}
-                  {form.substrate === "epdm" && <span>💡 <strong>Perfecte match!</strong> Dankzij de extreme elasticiteit van 250% beweegt the silicone-coating moeiteloos mee met EPDM.</span>}
+                  {form.substrate === "epdm" && <span>💡 <strong>Perfecte match!</strong> Dankzij de extreme elasticiteit van 250% beweegt de silicone-coating moeiteloos mee met EPDM.</span>}
                   {form.substrate === "pvc" && <span>💡 <strong>Maximale bescherming!</strong> Onze coating stopt poreusheid en uv-veroudering van uw PVC direct.</span>}
                   {form.substrate === "beton" && <span>💡 <strong>Dampopen werking!</strong> 100% hydrofoob maar ademend, restvocht kan wel naar buiten verdampen.</span>}
                 </p>
@@ -596,12 +596,14 @@ export default function ProDakcoatingRekenApp() {
               </div>
             </div>
           )}
-        </main>
 
-        <div className="flex justify-between mt-5">
-          <button type="button" disabled={step === 1} onClick={() => handleSetStep(step - 1)} className="rounded-2xl px-5 py-3 bg-white/10 disabled:opacity-30 font-bold">Vorige</button>
-          <button type="button" disabled={step === 6} onClick={() => handleSetStep(Math.min(6, step + 1))} className="rounded-2xl px-5 py-3 bg-cyan-400 text-slate-950 disabled:opacity-30 font-black">Volgende</button>
-        </div>
+          {/* VASTGEZETTE KNOPPENBALK BOVEN DE TRUSTBALK */}
+          <div className="sticky bottom-44 md:bottom-32 z-40 bg-slate-950/90 py-4 backdrop-blur-md flex justify-between mt-5 border-t border-white/5">
+            <button type="button" disabled={step === 1} onClick={() => handleSetStep(step - 1)} className="rounded-2xl px-5 py-3 bg-white/10 hover:bg-white/20 disabled:opacity-30 font-bold transition-all">Vorige</button>
+            <button type="button" disabled={step === 6} onClick={() => handleSetStep(Math.min(6, step + 1))} className="rounded-2xl px-5 py-3 bg-cyan-400 hover:bg-cyan-300 text-slate-950 disabled:opacity-30 font-black transition-all">Volgende</button>
+          </div>
+
+        </main>
       </div>
 
       {/* ROBUUSTE TRUST-BALK MET TELEFOONNUMMER ONDERIN HET SCHERM */}
@@ -689,7 +691,6 @@ function Grid({ items }) {
   );
 }
 
-// COMPONENT MET PERFECTE LEESBAARHEID & RODE CONTRASTPRIJZEN VOOR CONCURRENTIE
 function CompareCard({ title, subtitle, price, totalPrice, lifespan, highlight }) {
   return (
     <div className={highlight ? "rounded-3xl bg-cyan-400 text-slate-950 p-6 shadow-xl" : "rounded-3xl bg-white/10 border border-white/10 p-6"}>
